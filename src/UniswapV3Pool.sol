@@ -24,7 +24,7 @@ contract UniswapV3Pool {
         uint128 amount,
         uint256 amount0,
         uint256 amount1
-    )
+    );
 
     int24 internal constant MIN_TICK = -887272;
     int24 internal constant MAX_TICK = -MIN_TICK;
@@ -116,7 +116,9 @@ contract UniswapV3Pool {
         }
     }
 
-    function getBalance0() internal returns (uint256 balance) {
+    emit Mint(msg.sender, owner, lowerTick, upperTick, amount, amount0, amount1);
+
+function getBalance0() internal returns (uint256 balance) {
         balance = IERC20(token0).balanceOf(address(this));
     }
 
@@ -124,5 +126,4 @@ contract UniswapV3Pool {
         balance = IERC20(token1).balanceOf(address(this));
     }
 
-    emit Mint(msg.sender, owner, lowerTick, upperTick, amount, amount0, amount1);
 }
