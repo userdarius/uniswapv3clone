@@ -1,3 +1,4 @@
+//SPDX-License-Identifier: MIT
 pragma solidity ^0.8.14;
 
 import "./interfaces/IERC20.sol";
@@ -40,7 +41,7 @@ contract UniswapV3Pool {
         int24 tick;
     }
 
-    struct CallbackData{
+    struct CallbackData {
         address token0;
         address token1;
         address payer;
@@ -48,7 +49,7 @@ contract UniswapV3Pool {
 
     Slot0 public slot0;
 
-    // amount of liquidity 
+    // amount of liquidity
     uint128 public liquidity;
 
     // ticks info
@@ -100,30 +101,34 @@ contract UniswapV3Pool {
         uint256 balance1before;
 
         if (amount0 > 0) balance0Before = getBalance0();
-
         if (amount1 > 0) balance1before = getBalance1();
-
         IUniswapV3MintCallback(msg.sender).uniswapV3MintCallback(
             amount0,
             amount1
         );
-
         if (amount0 > 0 && balance0Before + amount0 > getBalance0()) {
             revert InsufficientInputAmount();
         }
         if (amount1 > 0 && balance1before + amount1 > getBalance1()) {
             revert InsufficientInputAmount();
         }
+
+        emit Mint(
+            msg.sender,
+            owner,
+            lowerTick,
+            upperTick,
+            amount,
+            amount0,
+            amount1
+        );
     }
 
-    emit Mint(msg.sender, owner, lowerTick, upperTick, amount, amount0, amount1);
-
-function getBalance0() internal returns (uint256 balance) {
+    function getBalance0() internal view returns (uint256 balance) {
         balance = IERC20(token0).balanceOf(address(this));
     }
 
-    function getBalance1() internal returns (uint256 balance) {
+    function getBalance1() internal view returns (uint256 balance) {
         balance = IERC20(token1).balanceOf(address(this));
     }
-
 }
