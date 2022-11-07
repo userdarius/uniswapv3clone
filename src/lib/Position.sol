@@ -20,7 +20,8 @@ library Position {
         int24 upperTick
     ) internal view returns (Position.Info storage position) {
         position = self[
+            // here we hash the owner, lowerTick, and upperTick to store the data in a cheaper way
             keccak256(abi.encodePacked(owner, lowerTick, upperTick))
-        ]; // here we hash the owner, lowerTick, and upperTick to store the data in a cheaper way
+        ];
     }
 }

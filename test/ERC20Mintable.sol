@@ -3,6 +3,10 @@ pragma solidity ^0.8.14;
 
 import "solmate/tokens/ERC20.sol";
 
+/**
+/* This contract inherits all functionality from ERC20.sol and we additionally 
+/* implement public mint method which will allow us to mint any num of tokens
+ */
 contract ERC20Mintable is ERC20 {
     constructor(
         string memory _name,
