@@ -8,7 +8,7 @@ import "./interfaces/IUniswapV3SwapCallback.sol";
 import "./lib/Position.sol";
 import "./lib/Tick.sol";
 
-contract UniswapV3Pool {
+contract UniswapV3PoolSwap1 {
     using Tick for mapping(int24 => Tick.Info);
     using Position for mapping(bytes32 => Position.Info);
     using Position for Position.Info;

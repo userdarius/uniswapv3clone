@@ -4,7 +4,7 @@ pragma solidity ^0.8.14;
 import "forge-std/Script.sol";
 import "forge-std/console.sol";
 import "forge-std/Script.sol";
-import "../src/UniswapV3Pool.sol";
+import "../src/UniswapV3PoolSwap1.sol";
 import "../src/UniswapV3Manager.sol";
 import "../test/ERC20Mintable.sol";
 
@@ -20,7 +20,7 @@ contract DeployDevelopment is Script {
         ERC20Mintable token0 = new ERC20Mintable("Wrapped Ether", "WETH", 18);
         ERC20Mintable token1 = new ERC20Mintable("USD Coin", "USDC", 18);
 
-        UniswapV3Pool pool = new UniswapV3Pool(address(token0), address(token1), currentSqrtP, currentTick);
+        UniswapV3PoolSwap1 pool = new UniswapV3PoolSwap1(address(token0), address(token1), currentSqrtP, currentTick);
         UniswapV3Manager manager = new UniswapV3Manager();
 
         token0.mint(msg.sender, wethBalance);

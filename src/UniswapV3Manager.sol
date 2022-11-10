@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.14;
 
-import "../src/UniswapV3Pool.sol";
+import "../src/UniswapV3PoolSwap1.sol";
 import "../src/interfaces/IERC20.sol";
 
 contract UniswapV3Manager {
@@ -12,11 +12,11 @@ contract UniswapV3Manager {
         uint128 liquidity,
         bytes calldata data
     ) public {
-        UniswapV3Pool(poolAddress).mint(msg.sender, lowerTick, upperTick, liquidity, data);
+        UniswapV3PoolSwap1(poolAddress).mint(msg.sender, lowerTick, upperTick, liquidity, data);
     }
 
     function swap(address poolAddress, bytes calldata data) public {
-        UniswapV3Pool(poolAddress).swap(msg.sender, data);
+        UniswapV3PoolSwap1(poolAddress).swap(msg.sender, data);
     }
 
     function uniswapV3MintCallback(
@@ -24,7 +24,7 @@ contract UniswapV3Manager {
         uint256 amount1,
         bytes calldata data
     ) public {
-        UniswapV3Pool.CallbackData memory extra = abi.decode(data, (UniswapV3Pool.CallbackData));
+        UniswapV3PoolSwap1.CallbackData memory extra = abi.decode(data, (UniswapV3PoolSwap1.CallbackData));
 
         IERC20(extra.token0).transferFrom(extra.payer, msg.sender, amount0);
         IERC20(extra.token1).transferFrom(extra.payer, msg.sender, amount1);
@@ -35,7 +35,7 @@ contract UniswapV3Manager {
         int256 amount1,
         bytes calldata data
     ) public {
-        UniswapV3Pool.CallbackData memory extra = abi.decode(data, (UniswapV3Pool.CallbackData));
+        UniswapV3PoolSwap1.CallbackData memory extra = abi.decode(data, (UniswapV3PoolSwap1.CallbackData));
 
         if (amount0 > 0) {
             IERC20(extra.token0).transferFrom(extra.payer, msg.sender, uint256(amount0));
